@@ -27,3 +27,6 @@ select date_part('day',date('2015-02-05')+interval '1 month'-date('2015-02-05'))
 
 22、获取年龄
 select date_part('year',age(timestamp'2014-09-01'))
+
+
+11111
