@@ -1,0 +1,29 @@
+17、表空间
+建表-TABLESPACE tbs_db_source;
+ALTER TABLE s_log_app_page_detail SET TABLESPACE tbs_db_source;
+索引
+ALTER INDEX public.idx_s_log_app_page_detail SET TABLESPACE tbs_db_source;
+
+18、select into 和 insert into select 两种表复制语句之间的差别
+select * into destTbl from srcTbl 
+insert into destTbl(fld1, fld2) select fld1, 5 from srcTbl 
+以上两句都是将 srcTbl 的数据插入到 destTbl，但两句又有区别的。 
+第一句（select into from）要求目标表（destTbl）不存在，因为在插入时会自动创建。 
+第二句（insert into select from）要求目标表（destTbl）存在，由于目标表已经存在，所以我们除了插入源表（srcTbl）的字段外，还可以插入常量，如例中的：5。 
+
+19、累加
+select currentdate,users,(select sum(b.users) from lee_tmp_customer b where b.currentdate<=a.currentdate) as u from lee_tmp_customer a order by currentdate desc
+
+20、查杀进程
+SELECT pg_stat_get_backend_pid(s.backendid) AS procpid,
+       pg_stat_get_backend_activity(s.backendid) AS current_query
+    FROM (SELECT pg_stat_get_backend_idset() AS backendid) AS s;
+
+select pg_cancel_backend('31879')
+
+
+21、获取月份自然天数
+select date_part('day',date('2015-02-05')+interval '1 month'-date('2015-02-05'))
+
+22、获取年龄
+select date_part('year',age(timestamp'2014-09-01'))
